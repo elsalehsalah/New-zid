@@ -1,0 +1,44 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: '#5B21B6',
+        secondary: '#8B5CF6',
+        accent: {
+          '1': '#AE72FF',
+          '2': '#4C1289',
+          '3': '#EC4899',
+        },
+        success: '#00B8A9',
+        background: '#09001A',
+        foreground: '#FFFFFF',
+        muted: {
+          DEFAULT: '#1A1A1A',
+          foreground: '#666666',
+        },
+        border: '#1A1A1A',
+      },
+      fontFamily: {
+        sans: ['var(--font-codec-pro)', 'system-ui', 'sans-serif'],
+        body: ['var(--font-suisse)', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-codec-pro)', 'system-ui', 'sans-serif'],
+        mono: ['monospace'],
+      },
+      maxWidth: {
+        content: '1400px',
+      },
+    },
+  },
+  plugins: [],
+};
+
+export default config;
+

@@ -1,0 +1,41 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { Sun, Moon } from 'lucide-react';
+import { useTheme } from '@/contexts/ThemeContext';
+import { cn } from '@/lib/utils';
+import { LiquidGlass } from '@/components/ui/liquid-glass';
+
+interface ThemeToggleProps {
+  className?: string;
+}
+
+export default function ThemeToggle({ className }: ThemeToggleProps) {
+  const { toggleTheme, isLight } = useTheme();
+
+  return (
+    <motion.button
+      onClick={toggleTheme}
+      className={cn(
+        "p-3 rounded-full backdrop-blur-xl border transition-all duration-300 relative overflow-hidden",
+        isLight
+          ? "bg-white/80 border-gray-200/50 text-slate-900 hover:bg-white hover:border-gray-300 shadow-lg"
+          : "bg-[#09001a]/80 border-white/10 text-white hover:bg-[#09001a] hover:border-white/20",
+        className
+      )}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      aria-label={isLight ? 'الوضع الداكن' : 'الوضع الفاتح'}
+    >
+      {isLight && <LiquidGlass className="absolute inset-0" rounded="rounded-full" />}
+      <span className="relative z-10">
+        {isLight ? (
+          <Moon className="w-5 h-5" />
+        ) : (
+          <Sun className="w-5 h-5" />
+        )}
+      </span>
+    </motion.button>
+  );
+}
+
