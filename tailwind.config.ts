@@ -25,6 +25,16 @@ const config: Config = {
           foreground: '#666666',
         },
         border: '#1A1A1A',
+        light: {
+          bg: '#eeeeee',
+          nav: '#f0f0f0',
+          heading: '#3c1c54',
+          body: '#777d88',
+          purple: '#ae72ff',
+          'gradient-start': '#7BAFFD',
+          'gradient-mid': '#AF72FE',
+          'gradient-end': '#5F2B86',
+        },
       },
       fontFamily: {
         sans: ['var(--font-codec-pro)', 'system-ui', 'sans-serif'],

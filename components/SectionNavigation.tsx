@@ -1,32 +1,62 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
+import featuresData from '@/data/features.json';
 
-const sections = [
-  { id: 'hero', label: 'الرئيسية', roman: 'I' },
-  { id: 'intro', label: 'مقدمة', roman: 'II' },
-  { id: 'المنتجات-features', label: 'المنتجات', roman: 'III' },
-  { id: 'المخزون-features', label: 'المخزون', roman: 'IV' },
-  { id: 'الكاشير-features', label: 'الكاشير', roman: 'V' },
-  { id: 'الطلبات-features', label: 'الطلبات', roman: 'VI' },
-  { id: 'التسويق-features', label: 'التسويق', roman: 'VII' },
-  { id: 'قنوات-البيع---مزيد-features', label: 'قنوات البيع - مزيد', roman: 'VIII' },
-  { id: 'التحليلات-features', label: 'التحليلات', roman: 'IX' },
-  { id: 'الجمعيات-features', label: 'الجمعيات', roman: 'X' },
-  { id: 'المدفوعات-والتمويل-features', label: 'المدفوعات والتمويل', roman: 'XI' },
-  { id: 'اللوجستيات-والشحن-features', label: 'اللوجستيات والشحن', roman: 'XII' },
-  { id: 'لوحة-التحكم-features', label: 'لوحة التحكم', roman: 'XIII' },
-  { id: 'cta', label: 'ابدأ الآن', roman: 'XIV' },
-];
+// Convert number to Roman numeral
+function toRoman(num: number): string {
+  const values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+  const numerals = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I'];
+  
+  let result = '';
+  for (let i = 0; i < values.length; i++) {
+    while (num >= values[i]) {
+      result += numerals[i];
+      num -= values[i];
+    }
+  }
+  return result;
+}
 
 export default function SectionNavigation() {
   const { isLight } = useTheme();
   const [activeSection, setActiveSection] = useState('hero');
   const [isVisible, setIsVisible] = useState(true);
+
+  // Dynamically generate sections from features data in the order they appear
+  const sections = useMemo(() => {
+    // Get unique sections in the order they first appear in the JSON
+    const seenSections = new Set<string>();
+    const featureSections: string[] = [];
+    
+    featuresData.features.forEach((feature: { section: string }) => {
+      if (!seenSections.has(feature.section)) {
+        seenSections.add(feature.section);
+        featureSections.push(feature.section);
+      }
+    });
+
+    // Convert to section objects with IDs matching FeaturesGrid format
+    const sectionObjects = featureSections.map((section) => ({
+      id: `${section.replace(/\s/g, '-').toLowerCase()}-features`,
+      label: section,
+    }));
+
+    // Add hero, intro, and CTA sections
+    return [
+      { id: 'hero', label: 'الرئيسية' },
+      { id: 'intro', label: 'مقدمة' },
+      ...sectionObjects,
+      { id: 'cta', label: 'ابدأ الآن' },
+    ].map((section, index) => ({
+      ...section,
+      roman: toRoman(index + 1),
+    }));
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,7 +85,7 @@ export default function SectionNavigation() {
     handleScroll(); // Initial check
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [sections]);
 
   const scrollToSection = (id: string) => {
     const section = document.getElementById(id);
@@ -82,7 +112,7 @@ export default function SectionNavigation() {
         className={cn(
           "backdrop-blur-xl rounded-2xl p-4 max-h-[80vh] overflow-y-auto transition-colors duration-500",
           isLight
-            ? "bg-white/80 border border-gray-200/50 shadow-lg"
+            ? "bg-white/[0.39] border-4 border-[rgba(255,255,255,0.15)] shadow-[0px_1.71px_22.22px_0px_rgba(174,114,255,0.21)]"
             : "bg-white/[0.02] border border-white/10"
         )}
         rounded="2xl"
@@ -95,20 +125,20 @@ export default function SectionNavigation() {
               <li key={section.id}>
                 <button
                   onClick={() => scrollToSection(section.id)}
-                  className={cn(
-                    "group relative flex items-center gap-4 w-full text-right transition-all duration-300",
-                    isActive
-                      ? isLight ? "text-slate-900" : "text-white"
-                      : isLight ? "text-slate-600 hover:text-slate-800" : "text-gray-500 hover:text-gray-300"
-                  )}
+                      className={cn(
+                        "group relative flex items-center gap-4 w-full text-right transition-all duration-300",
+                        isActive
+                          ? isLight ? "text-[#3c1c54]" : "text-white"
+                          : isLight ? "text-[#777d88] hover:text-[#3c1c54]" : "text-gray-500 hover:text-gray-300"
+                      )}
                 >
                   {/* Dotted line */}
-                  <div className={cn(
-                    "flex-1 border-t border-dotted transition-colors",
-                    isLight
-                      ? "border-gray-300/50 group-hover:border-gray-400/50"
-                      : "border-white/20 group-hover:border-white/40"
-                  )} />
+                      <div className={cn(
+                        "flex-1 border-t border-dotted transition-colors",
+                        isLight
+                          ? "border-[rgba(174,114,255,0.2)] group-hover:border-[rgba(174,114,255,0.4)]"
+                          : "border-white/20 group-hover:border-white/40"
+                      )} />
                   
                   {/* Label */}
                   <span className={cn(

@@ -19,13 +19,13 @@ export default function Hero() {
   return (
     <section id="hero" className={cn(
       "relative min-h-screen overflow-hidden transition-colors duration-500",
-      isLight ? "bg-[#f7f8fb]" : "bg-[#09001A]"
+      isLight ? "bg-[#eeeeee]" : "bg-[#09001A]"
     )}>
       {/* Grid Background */}
       <div className={cn(
         "fixed inset-0 bg-[size:80px_80px] pointer-events-none z-0 transition-opacity duration-500",
         isLight
-          ? "bg-[linear-gradient(to_right,rgba(0,0,0,0.02)_1px,transparent_1px),linear-gradient(to_bottom,rgba(0,0,0,0.02)_1px,transparent_1px)]"
+          ? "bg-[linear-gradient(to_right,rgba(174,114,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(174,114,255,0.03)_1px,transparent_1px)]"
           : "bg-[linear-gradient(to_right,rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.03)_1px,transparent_1px)]"
       )} />
 

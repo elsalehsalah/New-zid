@@ -96,32 +96,37 @@ export default function FeaturesGrid() {
   return (
     <section id="features" className={cn(
       "py-32 px-12 transition-colors duration-500",
-      isLight ? "bg-[#f7f8fb]" : "bg-[#09001A]"
+      isLight ? "bg-[#eeeeee]" : "bg-[#09001A]"
     )}>
       <div className="max-w-content mx-auto">
-        {/* Main Header */}
-        <div className="text-center mb-20">
+            {/* Main Header */}
+            <div className="text-center mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className={cn(
-              "font-heading text-6xl md:text-7xl font-black mb-6 bg-clip-text text-transparent transition-colors duration-500",
-              isLight
-                ? "bg-gradient-to-br from-slate-900 to-slate-600"
-                : "bg-gradient-to-br from-white to-gray-400"
-            )}
+                className={cn(
+                  "font-heading text-6xl md:text-7xl font-black mb-6 bg-clip-text text-transparent transition-colors duration-500",
+                  isLight
+                    ? "text-[#3c1c54]"
+                    : "bg-gradient-to-br from-white to-gray-400"
+                )}
+                style={isLight ? {
+                  backgroundImage: "linear-gradient(10.2906deg, rgb(123, 175, 253) 17.573%, rgb(175, 114, 254) 52.447%, rgb(95, 43, 134) 93.133%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent"
+                } : undefined}
           >
             تحديثات شتاء 2026
           </motion.h2>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className={cn(
-              "text-lg max-w-2xl mx-auto transition-colors duration-500",
-              isLight ? "text-slate-600" : "text-gray-400"
-            )}
+              <motion.p
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
+                className={cn(
+                  "text-lg max-w-2xl mx-auto transition-colors duration-500",
+                  isLight ? "text-[#1f0433]" : "text-gray-400"
+                )}
           >
             {featuresData.total_count} ميزة جديدة ومحدّثة عبر جميع أقسام المنصة
           </motion.p>
@@ -154,10 +159,10 @@ export default function FeaturesGrid() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-2">
-                      <h3 className={cn(
-                        "font-heading text-4xl md:text-5xl font-black transition-colors duration-500",
-                        isLight ? "text-slate-900" : "text-white"
-                      )}>
+                        <h3 className={cn(
+                          "font-heading text-4xl md:text-5xl font-black transition-colors duration-500",
+                          isLight ? "text-[#3c1c54]" : "text-white"
+                        )}>
                         {section}
                       </h3>
                       <span className={cn(
@@ -167,10 +172,10 @@ export default function FeaturesGrid() {
                         {features.length} {features.length === 1 ? 'ميزة' : 'ميزات'}
                       </span>
                     </div>
-                    <p className={cn(
-                      "text-lg font-body transition-colors duration-500",
-                      isLight ? "text-slate-600" : "text-gray-400"
-                    )}>
+                        <p className={cn(
+                          "text-lg font-body transition-colors duration-500",
+                          isLight ? "text-[#777d88]" : "text-gray-400"
+                        )}>
                       {sectionDescriptions[section] || ''}
                     </p>
                   </div>
@@ -187,7 +192,7 @@ export default function FeaturesGrid() {
                       stats={feature.package}
                       color={color}
                       reverse={index % 2 === 1}
-                      index={sectionIndex * 100 + index}
+                      index={index}
                       id={`feature-${section}-${index}`}
                     />
                   ))}

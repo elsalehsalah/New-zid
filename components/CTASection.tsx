@@ -46,7 +46,7 @@ export default function CTASection() {
   return (
     <section id="cta" className={cn(
       "py-32 px-12 relative overflow-hidden transition-colors duration-500",
-      isLight ? "bg-[#f7f8fb]" : "bg-[#09001A]"
+      isLight ? "bg-[#eeeeee]" : "bg-[#09001A]"
     )}>
       <div className={cn(
         "absolute inset-0 blur-[100px] transition-opacity duration-500",
@@ -135,7 +135,7 @@ const CTABlock = ({ area, icon: Icon, title, description, isMain }: CTABlockProp
                 transition={{ delay: 0.1, duration: 0.4 }}
                 className={cn(
                   "font-body text-sm leading-[1.125rem] md:text-base md:leading-[1.375rem] transition-colors duration-500",
-                  isLight ? "text-slate-600" : "text-gray-400"
+                  isLight ? "text-[#777d88]" : "text-gray-400"
                 )}
               >
                 {description}

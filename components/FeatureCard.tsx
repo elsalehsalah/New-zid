@@ -1,8 +1,7 @@
 'use client';
 
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useRef } from 'react';
 import { ANIMATIONS } from '@/lib/design-system';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
@@ -22,22 +21,6 @@ interface Props {
 export default function FeatureCard({ title, subtitle, description, stats, color, reverse, index, id }: Props) {
   const { isLight } = useTheme();
   const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });
-  const containerRef = useRef<HTMLDivElement>(null);
-  
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const x = useSpring(mouseX, { damping: 25, stiffness: 200 });
-  const y = useSpring(mouseY, { damping: 25, stiffness: 200 });
-  const numberX = useTransform(x, [-200, 200], [-15, 15]);
-  const numberY = useTransform(y, [-200, 200], [-10, 10]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (rect) {
-      mouseX.set(e.clientX - (rect.left + rect.width / 2));
-      mouseY.set(e.clientY - (rect.top + rect.height / 2));
-    }
-  };
 
   return (
     <motion.div
@@ -48,27 +31,19 @@ export default function FeatureCard({ title, subtitle, description, stats, color
       transition={{ duration: 0.8, ease: ANIMATIONS.easing }}
     >
       <div
-        ref={containerRef}
-        onMouseMove={handleMouseMove}
         className={cn(
           "group relative rounded-3xl p-12 md:p-16 overflow-hidden transition-all duration-500",
           isLight
-            ? "bg-white/60 border border-gray-200/50 hover:bg-white/80 hover:border-gray-300/50 shadow-lg"
+            ? "border-4 border-[rgba(255,255,255,0.15)] hover:border-white/[0.2]"
             : "bg-white/[0.04] border border-white/8 hover:bg-white/[0.05] hover:border-white/13"
         )}
+        style={isLight ? {
+          background: 'url(/textures/feature-bg.png) lightgray 50% / cover no-repeat, rgba(255, 255, 255, 0.39)',
+          borderRadius: '24px'
+        } : undefined}
       >
         {isLight && <LiquidGlass className="absolute inset-0" rounded="rounded-3xl" />}
-        {/* Oversized Index Number */}
-        <motion.div
-          className={cn(
-            "absolute -left-8 top-1/2 -translate-y-1/2 text-[18rem] font-bold select-none pointer-events-none leading-none transition-opacity duration-500",
-            isLight ? "text-slate-200" : "text-white/[0.05]"
-          )}
-          style={{ x: numberX, y: numberY }}
-        >
-          {String(index + 1).padStart(2, '0')}
-        </motion.div>
-
+        
         {/* Glow on Hover */}
         <motion.div
           className="absolute -top-1/2 -left-1/3 w-96 h-96 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[100px] pointer-events-none"
@@ -85,10 +60,13 @@ export default function FeatureCard({ title, subtitle, description, stats, color
               transition={{ delay: 0.2, duration: 0.6 }}
               className="flex items-center gap-4 mb-6"
             >
-              <div className="w-8 h-px bg-white/20" />
+              <div className={cn(
+                "w-8 h-px transition-colors duration-500",
+                isLight ? "bg-[#777d88]" : "bg-gray-500"
+              )} />
               <span className={cn(
                 "text-xs font-mono uppercase tracking-widest transition-colors duration-500",
-                isLight ? "text-slate-500" : "text-gray-500"
+                isLight ? "text-[#777d88]" : "text-gray-500"
               )}>
                 الميزة {String(index + 1).padStart(2, '0')}
               </span>
@@ -149,7 +127,7 @@ export default function FeatureCard({ title, subtitle, description, stats, color
               transition={{ delay: 0.9, duration: 0.5 }}
               className={cn(
                 "text-base leading-relaxed mb-8 transition-colors duration-500",
-                isLight ? "text-slate-600" : "text-gray-400"
+                isLight ? "text-[#777d88]" : "text-gray-400"
               )}
             >
               {description}
@@ -198,7 +176,7 @@ export default function FeatureCard({ title, subtitle, description, stats, color
             >
               <div className={cn(
                 "text-center transition-colors duration-500",
-                isLight ? "text-slate-600" : "text-gray-700"
+                isLight ? "text-[#777d88]" : "text-gray-700"
               )}>
                 <div className="text-sm font-mono">عرض الميزة</div>
                 <div className="text-xs opacity-50">(فيديو أو صورة)</div>

@@ -58,7 +58,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ar" dir="rtl" className={`${codecPro.variable} ${suisseIntl.variable}`}>
-      <body className="bg-[#09001A] text-white font-body overflow-x-hidden antialiased transition-colors duration-500">
+      <body className="bg-[#eeeeee] text-[#3c1c54] font-body overflow-x-hidden antialiased transition-colors duration-500">
         <ThemeProvider>
           <GlassFilter />
           {children}

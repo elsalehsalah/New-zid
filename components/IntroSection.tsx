@@ -13,7 +13,7 @@ export default function IntroSection() {
       id="intro" 
       className={cn(
         "py-20 md:py-32 px-6 md:px-12 transition-colors duration-500",
-        isLight ? "bg-[#f7f8fb]" : "bg-[#09001A]"
+        isLight ? "bg-[#eeeeee]" : "bg-[#09001A]"
       )}
     >
       <div className="max-w-7xl mx-auto">
@@ -37,7 +37,7 @@ export default function IntroSection() {
             viewport={{ once: true }}
             className={cn(
               "text-lg md:text-xl max-w-3xl mx-auto mt-8 font-body transition-colors duration-500",
-              isLight ? "text-slate-600" : "text-gray-400"
+              isLight ? "text-[#1f0433]" : "text-gray-400"
             )}
           >
             تحديثات شتاء 2026 تجعل إدارة متجرك أكثر سهولة وسرعة من أي وقت مضى

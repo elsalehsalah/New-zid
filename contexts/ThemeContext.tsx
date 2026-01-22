@@ -13,7 +13,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('dark');
+  const [theme, setTheme] = useState<Theme>('light');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -21,24 +21,35 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const stored = localStorage.getItem('theme') as Theme;
     if (stored === 'light' || stored === 'dark') {
       setTheme(stored);
+    } else {
+      // Default to light if no stored preference
+      setTheme('light');
     }
   }, []);
 
   useEffect(() => {
-    if (!mounted) return;
-    
     const root = document.documentElement;
     const body = document.body;
+    
+    if (!mounted) {
+      // Set initial light mode styles before mount
+      root.dataset.theme = 'light';
+      root.classList.remove('dark');
+      body.style.backgroundColor = '#eeeeee';
+      body.style.color = '#3c1c54';
+      return;
+    }
     
     root.dataset.theme = theme;
     if (theme === 'dark') {
       root.classList.add('dark');
+      body.style.backgroundColor = '#09001A';
+      body.style.color = '#ffffff';
     } else {
       root.classList.remove('dark');
+      body.style.backgroundColor = '#eeeeee';
+      body.style.color = '#3c1c54';
     }
-    
-    body.style.backgroundColor = theme === 'light' ? '#f7f8fb' : '#09001A';
-    body.style.color = theme === 'light' ? '#0f172a' : '#ffffff';
     
     localStorage.setItem('theme', theme);
   }, [theme, mounted]);
