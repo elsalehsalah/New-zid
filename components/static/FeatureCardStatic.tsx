@@ -1,8 +1,5 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { ANIMATIONS } from '@/lib/design-system';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
 import { LiquidGlass } from '@/components/ui/liquid-glass';
@@ -18,24 +15,20 @@ interface Props {
   id?: string;
 }
 
-export default function FeatureCard({ title, subtitle, description, stats, color, reverse, index, id }: Props) {
+export default function FeatureCardStatic({ title, subtitle, description, stats, color, reverse, index, id }: Props) {
   const { isLight } = useTheme();
-  const [ref, inView] = useInView({ threshold: 0.2, triggerOnce: true });
 
   return (
-    <motion.div
+    <div
       id={id}
-      ref={ref}
-      initial={{ opacity: 0, y: 60 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, ease: ANIMATIONS.easing }}
+      className="opacity-100"
     >
       <div
         className={cn(
-          "group relative rounded-3xl p-12 md:p-16 overflow-hidden transition-all duration-500",
+          "relative rounded-3xl p-12 md:p-16 overflow-hidden",
           isLight
-            ? "border-4 border-[rgba(255,255,255,0.15)] hover:border-white/[0.2]"
-            : "bg-white/[0.04] border border-white/8 hover:bg-white/[0.05] hover:border-white/13"
+            ? "border-4 border-[rgba(255,255,255,0.15)]"
+            : "bg-white/[0.04] border border-white/8"
         )}
         style={isLight ? {
           background: 'url(/textures/feature-bg.png) lightgray 50% / cover no-repeat, rgba(255, 255, 255, 0.39)',
@@ -43,23 +36,12 @@ export default function FeatureCard({ title, subtitle, description, stats, color
         } : undefined}
       >
         {isLight && <LiquidGlass className="absolute inset-0" rounded="rounded-3xl" />}
-        
-        {/* Glow on Hover */}
-        <motion.div
-          className="absolute -top-1/2 -left-1/3 w-96 h-96 opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-[100px] pointer-events-none"
-          style={{ background: `radial-gradient(circle, ${color}15 0%, transparent 70%)` }}
-        />
 
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${reverse ? 'lg:grid-flow-dense' : ''}`}>
           {/* Content */}
           <div className={`relative z-10 ${reverse ? 'lg:col-start-2' : ''}`}>
             {/* Label */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="flex items-center gap-4 mb-6"
-            >
+            <div className="flex items-center gap-4 mb-6 opacity-100">
               <div className={cn(
                 "w-8 h-px transition-colors duration-500",
                 isLight ? "bg-[#777d88]" : "bg-gray-500"
@@ -70,15 +52,10 @@ export default function FeatureCard({ title, subtitle, description, stats, color
               )}>
                 الميزة {String(index + 1).padStart(2, '0')}
               </span>
-            </motion.div>
+            </div>
 
             {/* Badges Container */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.4, duration: 0.5 }}
-              className="flex items-center gap-2 mb-5 flex-wrap"
-            >
+            <div className="flex items-center gap-2 mb-5 flex-wrap opacity-100">
               {/* Package Badge */}
               <div
                 className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-solid"
@@ -139,78 +116,43 @@ export default function FeatureCard({ title, subtitle, description, stats, color
                   </div>
                 );
               })()}
-            </motion.div>
+            </div>
 
-            {/* Title - Word Reveal */}
-            <motion.h3
-              initial="hidden"
-              animate={inView ? "visible" : "hidden"}
-              className="font-heading text-4xl md:text-5xl font-black leading-[1.2] mb-3"
-            >
-              {title.split(" ").map((word, i) => (
-                <motion.span
-                  key={i}
-                  className="inline-block ml-[0.25em]"
-                  variants={{
-                    hidden: { opacity: 0, y: 20, rotateX: 45 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      rotateX: 0,
-                      transition: { duration: 0.5, delay: 0.5 + i * 0.05, ease: ANIMATIONS.easing },
-                    },
-                  }}
-                >
-                  {word}
-                </motion.span>
-              ))}
-            </motion.h3>
+            {/* Title */}
+            <h3 className="font-heading text-4xl md:text-5xl font-black leading-[1.2] mb-3">
+              {title}
+            </h3>
 
             {/* Description */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ delay: 0.9, duration: 0.5 }}
+            <p
               className={cn(
-                "text-base leading-relaxed mb-8 transition-colors duration-500",
+                "text-base leading-relaxed mb-8 transition-colors duration-500 opacity-100",
                 isLight ? "text-[#777d88]" : "text-gray-400"
               )}
             >
               {description}
-            </motion.p>
+            </p>
 
             {/* CTA */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={inView ? { opacity: 1 } : {}}
-              transition={{ delay: 1, duration: 0.5 }}
-              className="flex items-center gap-3"
-            >
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={inView ? { scaleX: 1 } : {}}
-                transition={{ delay: 1.1, duration: 0.6 }}
+            <div className="flex items-center gap-3 opacity-100">
+              <div
                 className="w-8 h-px"
                 style={{ background: color }}
               />
-              <motion.button
-                whileHover={{ x: -4 }}
+              <button
                 className="font-bold text-sm"
                 style={{ color }}
               >
                 اعرف المزيد ←
-              </motion.button>
-            </motion.div>
+              </button>
+            </div>
           </div>
 
           {/* Visual Placeholder */}
           <div className={`relative z-10 ${reverse ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ delay: 0.6, duration: 0.7 }}
+            <div
               className={cn(
-                "aspect-video rounded-2xl border flex items-center justify-center transition-colors duration-500",
+                "aspect-video rounded-2xl border flex items-center justify-center transition-colors duration-500 opacity-100",
                 isLight ? "border-gray-200/50" : ""
               )}
               style={{ 
@@ -227,11 +169,11 @@ export default function FeatureCard({ title, subtitle, description, stats, color
                 <div className="text-sm font-mono">عرض الميزة</div>
                 <div className="text-xs opacity-50">(فيديو أو صورة)</div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

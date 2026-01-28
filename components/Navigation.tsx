@@ -23,54 +23,19 @@ export default function Navigation() {
       )}
     >
       <LiquidGlass className="absolute inset-0" rounded="" disabled={!isLight} />
-      <div className="w-full flex items-center justify-end px-[112px] py-[22px] relative z-10">
-        <ThemeToggle className="absolute left-6 top-1/2 -translate-y-1/2 z-[60]" />
-        <div className="flex gap-[16px] items-center ml-auto" dir="ltr">
-          {/* Text Content */}
-          <div className="flex flex-col items-end leading-[0] text-[17.633px] text-right w-[148px]">
-            {/* Arabic Text - Bold */}
-                <div className={cn(
-                  "bg-clip-text flex flex-col font-body font-bold justify-center min-w-full relative shrink-0 transition-colors duration-500",
-                  isLight 
-                    ? "bg-gradient-to-l" 
-                    : "bg-gradient-to-l from-white to-[#99a1af]"
-                )}
-                style={isLight ? {
-                  backgroundImage: "linear-gradient(5.23361deg, rgb(123, 175, 253) 17.573%, rgb(175, 114, 254) 52.447%, rgb(95, 43, 134) 93.133%)"
-                } : undefined}>
-              <p className="leading-[23.51px] text-transparent" dir="auto" style={{ WebkitTextFillColor: 'transparent' }}>
-                تحديثات الشتاء 26'
-              </p>
-            </div>
-            {/* English Text - Light/Thin */}
-                <div className={cn(
-                  "bg-clip-text flex flex-col font-body font-light justify-center relative shrink-0 uppercase transition-colors duration-500",
-                  isLight 
-                    ? "bg-gradient-to-l" 
-                    : "bg-gradient-to-l from-white to-[#99a1af]"
-                )}
-                style={isLight ? {
-                  backgroundImage: "linear-gradient(5.37814deg, rgb(123, 175, 253) 17.573%, rgb(175, 114, 254) 52.447%, rgb(95, 43, 134) 93.133%)"
-                } : undefined}>
-              <p className="leading-[23.51px] text-[14px] text-transparent" dir="auto" style={{ WebkitTextFillColor: 'transparent' }}>
-                Winter Updates
-              </p>
-            </div>
-          </div>
-          
-          {/* Logo - appears on the right of the text */}
-          <div className="h-[48px] overflow-clip relative shrink-0 w-[102px]">
-            <div className="absolute contents inset-0">
-              <Image
-                src="/logo.svg"
-                alt="Logo"
-                width={102}
-                height={48}
-                className="block max-w-none size-full"
-              />
-            </div>
-          </div>
+      <div className="w-full flex items-center justify-between px-6 md:px-12 lg:px-[112px] py-[22px] relative z-10">
+        {/* Logo - on the left */}
+        <div className="flex items-center">
+          <Image
+            src="/logo.svg"
+            alt="Logo"
+            width={136}
+            height={48}
+            className="h-[48px] w-auto object-contain"
+          />
         </div>
+        {/* Theme Toggle - on the right */}
+        <ThemeToggle />
       </div>
     </motion.nav>
   );

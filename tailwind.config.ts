@@ -45,6 +45,9 @@ const config: Config = {
       maxWidth: {
         content: '1400px',
       },
+      maskImage: {
+        'radial-gradient': 'radial-gradient(var(--tw-gradient-stops))',
+      },
     },
   },
   plugins: [],

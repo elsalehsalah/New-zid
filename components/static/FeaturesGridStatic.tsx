@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import FeatureCard from './FeatureCard';
+import FeatureCardStatic from './FeatureCardStatic';
 import { useTheme } from '@/contexts/ThemeContext';
 import { cn } from '@/lib/utils';
 import { 
@@ -12,16 +12,12 @@ import {
   Megaphone, 
   Share2,
   BarChart3,
-  Users,
   Settings,
   Wallet,
   Truck,
-  DollarSign,
-  Building,
   Briefcase
 } from 'lucide-react';
 import featuresData from '@/data/features.json';
-import { motion } from 'framer-motion';
 
 interface Feature {
   section: string;
@@ -76,10 +72,9 @@ const sectionDescriptions: Record<string, string> = {
   'لوحة التحكم': 'واجهة محسّنة لإدارة متجرك',
 };
 
-export default function FeaturesGrid() {
+export default function FeaturesGridStatic() {
   const { isLight } = useTheme();
 
-  // Group features by section
   const featuresBySection = useMemo(() => {
     const grouped: Record<string, Feature[]> = {};
     featuresData.features.forEach((feature: Feature) => {
@@ -99,40 +94,28 @@ export default function FeaturesGrid() {
       isLight ? "bg-[#eeeeee]" : "bg-[#09001A]"
     )}>
       <div className="max-w-content mx-auto">
-            {/* Main Header */}
-            <div className="text-center mb-20">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-                className={cn(
-                  "font-heading text-6xl md:text-7xl font-black mb-6 bg-clip-text text-transparent transition-colors duration-500",
-                  isLight
-                    ? "text-[#3c1c54]"
-                    : "bg-gradient-to-br from-white to-gray-400"
-                )}
-                style={isLight ? {
-                  backgroundImage: "linear-gradient(10.2906deg, rgb(123, 175, 253) 17.573%, rgb(175, 114, 254) 52.447%, rgb(95, 43, 134) 93.133%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent"
-                } : undefined}
-          >
+        <div className="text-center mb-20">
+          <h2 className={cn(
+            "font-heading text-6xl md:text-7xl font-black mb-6 bg-clip-text text-transparent transition-colors duration-500",
+            isLight
+              ? "text-[#3c1c54]"
+              : "bg-gradient-to-br from-white to-gray-400"
+          )}
+          style={isLight ? {
+            backgroundImage: "linear-gradient(10.2906deg, rgb(123, 175, 253) 17.573%, rgb(175, 114, 254) 52.447%, rgb(95, 43, 134) 93.133%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent"
+          } : undefined}>
             تحديثات ماوقفت
-          </motion.h2>
-              <motion.p
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className={cn(
-                  "text-lg max-w-2xl mx-auto transition-colors duration-500",
-                  isLight ? "text-[#1f0433]" : "text-gray-400"
-                )}
-          >
+          </h2>
+          <p className={cn(
+            "text-lg max-w-2xl mx-auto transition-colors duration-500",
+            isLight ? "text-[#1f0433]" : "text-gray-400"
+          )}>
             +90 خاصية جديدة على منتجاتنا من المخزون إلى التمويل
-          </motion.p>
+          </p>
         </div>
 
-        {/* Features by Section */}
         <div className="space-y-32">
           {sections.map((section, sectionIndex) => {
             const Icon = sectionIcons[section] || Package;
@@ -141,13 +124,7 @@ export default function FeaturesGrid() {
 
             return (
               <div key={section} id={`${section.replace(/\s/g, '-').toLowerCase()}-features`} className="space-y-12 scroll-mt-32">
-                {/* Section Header */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-12"
-                >
+                <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-12">
                   <div 
                     className="w-16 h-16 rounded-2xl flex items-center justify-center border shrink-0"
                     style={{ 
@@ -159,10 +136,10 @@ export default function FeaturesGrid() {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-4 mb-2">
-                        <h3 className={cn(
-                          "font-heading text-4xl md:text-5xl font-black transition-colors duration-500",
-                          isLight ? "text-[#3c1c54]" : "text-white"
-                        )}>
+                      <h3 className={cn(
+                        "font-heading text-4xl md:text-5xl font-black transition-colors duration-500",
+                        isLight ? "text-[#3c1c54]" : "text-white"
+                      )}>
                         {section}
                       </h3>
                       <span className={cn(
@@ -172,19 +149,18 @@ export default function FeaturesGrid() {
                         {features.length} {features.length === 1 ? 'ميزة' : 'ميزات'}
                       </span>
                     </div>
-                        <p className={cn(
-                          "text-lg font-body transition-colors duration-500",
-                          isLight ? "text-[#777d88]" : "text-gray-400"
-                        )}>
+                    <p className={cn(
+                      "text-lg font-body transition-colors duration-500",
+                      isLight ? "text-[#777d88]" : "text-gray-400"
+                    )}>
                       {sectionDescriptions[section] || ''}
                     </p>
                   </div>
-                </motion.div>
+                </div>
 
-                {/* Features List */}
                 <div className="space-y-8">
                   {features.map((feature, index) => (
-                    <FeatureCard 
+                    <FeatureCardStatic 
                       key={`${section}-${index}`}
                       title={feature.title}
                       subtitle={feature.label}

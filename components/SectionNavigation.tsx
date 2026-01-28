@@ -46,9 +46,10 @@ export default function SectionNavigation() {
       label: section,
     }));
 
-    // Add hero, intro, and CTA sections
+    // Add hero, pricing, intro, and CTA sections
     return [
       { id: 'hero', label: 'الرئيسية' },
+      { id: 'pricing', label: 'الأسعار' },
       { id: 'intro', label: 'مقدمة' },
       ...sectionObjects,
       { id: 'cta', label: 'ابدأ الآن' },

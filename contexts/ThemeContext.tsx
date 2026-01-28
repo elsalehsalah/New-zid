@@ -13,7 +13,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -22,8 +22,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     if (stored === 'light' || stored === 'dark') {
       setTheme(stored);
     } else {
-      // Default to light if no stored preference
-      setTheme('light');
+      // Default to dark if no stored preference
+      setTheme('dark');
     }
   }, []);
 
@@ -32,11 +32,11 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     const body = document.body;
     
     if (!mounted) {
-      // Set initial light mode styles before mount
-      root.dataset.theme = 'light';
-      root.classList.remove('dark');
-      body.style.backgroundColor = '#eeeeee';
-      body.style.color = '#3c1c54';
+      // Set initial dark mode styles before mount
+      root.dataset.theme = 'dark';
+      root.classList.add('dark');
+      body.style.backgroundColor = '#09001A';
+      body.style.color = '#ffffff';
       return;
     }
     

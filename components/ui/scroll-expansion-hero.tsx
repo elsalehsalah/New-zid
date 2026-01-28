@@ -168,8 +168,20 @@ const ScrollExpandMedia = ({
   const mediaHeight = 400 + scrollProgress * (isMobileState ? 200 : 400);
   const textTranslateX = scrollProgress * (isMobileState ? 180 : 150);
 
-  const firstWord = title ? title.split(' ')[0] : '';
-  const restOfTitle = title ? title.split(' ').slice(1).join(' ') : '';
+  // Split title by newline for two-line display
+  const titleLines = title ? title.split('\n') : [];
+  const firstLine = titleLines[0] || '';
+  const secondLineFull = titleLines[1] || '';
+  // Split second line to separate "وزوّدنا الإمكانيات" which should move left
+  let secondLine = '';
+  let thirdLine = '';
+  if (secondLineFull && secondLineFull.includes('وزوّدنا الإمكانيات')) {
+    const splitIndex = secondLineFull.indexOf('وزوّدنا الإمكانيات');
+    secondLine = secondLineFull.substring(0, splitIndex).trim();
+    thirdLine = 'وزوّدنا الإمكانيات';
+  } else {
+    secondLine = secondLineFull;
+  }
 
   return (
     <div
@@ -324,23 +336,45 @@ const ScrollExpandMedia = ({
                   textBlend ? 'mix-blend-difference' : 'mix-blend-normal'
                 }`}
               >
-                <motion.h2
-                  className={cn(
-                    "font-heading text-4xl md:text-5xl lg:text-6xl font-black transition-none bg-clip-text text-transparent",
-                    isLight
-                      ? "bg-gradient-to-br from-slate-900 to-slate-600"
-                      : "bg-gradient-to-br from-white to-gray-400"
-                  )}
-                  style={{ transform: `translateX(-${textTranslateX}vw)` }}
-                >
-                  {firstWord}
-                </motion.h2>
-                <motion.h2
-                  className='font-heading text-4xl md:text-5xl lg:text-6xl font-black text-center bg-gradient-to-l from-[#AE72FF] via-[#4C1289] to-[#EC4899] bg-clip-text text-transparent transition-none'
-                  style={{ transform: `translateX(${textTranslateX}vw)` }}
-                >
-                  {restOfTitle}
-                </motion.h2>
+                {firstLine && (
+                  <motion.h2
+                    className={cn(
+                      "font-heading text-4xl md:text-5xl lg:text-[54px] font-black transition-none bg-clip-text text-transparent",
+                      isLight
+                        ? "bg-gradient-to-br from-slate-900 to-slate-600"
+                        : "bg-gradient-to-br from-white to-gray-400"
+                    )}
+                    style={{ transform: `translateX(-${textTranslateX}vw)` }}
+                  >
+                    {firstLine}
+                  </motion.h2>
+                )}
+                {secondLine && (
+                  <motion.h2
+                    className={cn(
+                      "font-heading text-4xl md:text-5xl lg:text-[54px] font-black text-center transition-none bg-clip-text text-transparent",
+                      isLight
+                        ? "bg-gradient-to-br from-slate-900 to-slate-600"
+                        : "bg-gradient-to-br from-white to-gray-400"
+                    )}
+                    style={{ transform: `translateX(${textTranslateX}vw)` }}
+                  >
+                    {secondLine}
+                  </motion.h2>
+                )}
+                {thirdLine && (
+                  <motion.h2
+                    className={cn(
+                      "font-heading text-4xl md:text-5xl lg:text-[54px] font-black transition-none bg-clip-text text-transparent",
+                      isLight
+                        ? "bg-gradient-to-br from-slate-900 to-slate-600"
+                        : "bg-gradient-to-br from-white to-gray-400"
+                    )}
+                    style={{ transform: `translateX(-${textTranslateX}vw)` }}
+                  >
+                    {thirdLine}
+                  </motion.h2>
+                )}
               </div>
             </div>
 

@@ -71,8 +71,7 @@ export default function Hero() {
           mediaSrc="https://www.youtube.com/watch?v=R9YXHDyz3s4"
           posterSrc="https://images.pexels.com/videos/5752729/space-earth-universe-cosmos-5752729.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=1280"
           bgImageSrc="https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=1920&auto=format&fit=crop"
-          title="مستقبل التجارة الإلكترونية"
-          date="إصدار شتاء 2026"
+          title={`زد تغيرت\nبسّطنا، سرّعنا، وزوّدنا الإمكانيات`}
           scrollToExpand="مرر للتوسيع"
         />
       </div>
